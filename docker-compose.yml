@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:latest
+    env_file: ./postgresql.env
+    volumes:
+      - "db_data:/var/lib/postgresql/data"
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - 5432:5432
+    networks:
+      - local_dev
+    environment:
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_pass
+      POSTGRES_DB: test_db
+  web:
+    volumes:
+      - "db_data:/var/lib/postgresql/data"
+      - "app_data:/var/www/html"
+      - "./backup:/mnt/backup"
+    build: ./php/
+    ports:
+      - 80:80
+    networks:
+      - local_dev
+
+networks:
+  local_dev:
+
+volumes:
+  app_data: 
+  db_data: 
