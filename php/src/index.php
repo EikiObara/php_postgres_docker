@@ -1,2 +1,4 @@
+<meta charset="UTF-8">
+<title>テスト</title>
 <?php
-  echo "hello php";
+  echo "Hello world! freshman";
